@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  ekosim-frontend:
+    build:
+      context: ..
+      dockerfile: EkoSim-Infrastructure/dockerfiles/frontend.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - ekosim-api
+      - ekosim-backend
+    networks:
+      - ekosim-network
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+
+  ekosim-api:
+    build:
+      context: ..
+      dockerfile: EkoSim-Infrastructure/dockerfiles/api.Dockerfile
+    environment:
+      - NODE_ENV=production
+      - DATABASE_PATH=/data/ekosim.db
+      - BACKEND_URL=http://ekosim-backend:8080
+    volumes:
+      - sqlite-data:/data
+      - ./config/env/api.env:/app/.env:ro
+    networks:
+      - ekosim-network
+    depends_on:
+      - ekosim-backend
+    restart: unless-stopped
+
+  ekosim-backend:
+    build:
+      context: ..
+      dockerfile: EkoSim-Infrastructure/dockerfiles/backend.Dockerfile
+    environment:
+      - DATABASE_PATH=/data/ekosim.db
+    volumes:
+      - sqlite-data:/data
+      - ./config/env/backend.env:/app/.env:ro
+    networks:
+      - ekosim-network
+    restart: unless-stopped
+
+volumes:
+  sqlite-data:
+    driver: local
+
+networks:
+  ekosim-network:
+    driver: bridge

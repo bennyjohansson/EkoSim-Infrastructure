@@ -1,0 +1,22 @@
+# Environment files
+config/env/*.env
+!config/env/*.env.example
+
+# Docker/Podman data
+.docker/
+.podman/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.temp
