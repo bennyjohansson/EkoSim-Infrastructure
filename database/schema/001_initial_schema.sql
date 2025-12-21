@@ -151,7 +151,7 @@ CREATE TABLE companies (
     production_function INTEGER NOT NULL,
     production INTEGER NOT NULL,
     employees INTEGER NOT NULL,
-    item_efficiency INTEGER NOT NULL,
+    item_efficiency DECIMAL NOT NULL,
     capacity_vs_efficiency_split DECIMAL NOT NULL,
     recorded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
