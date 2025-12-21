@@ -12,6 +12,7 @@
 CREATE VIEW "TIME_DATA" AS 
 SELECT 
     ROW_NUMBER() OVER (ORDER BY simulation_id, time_period) AS "ID",
+    simulation_id,
     time_period AS "TIME",
     gdp_items AS "GDP_ITEMS", 
     demand AS "DEMAND",
@@ -29,7 +30,8 @@ FROM economic_indicators;
 -- MONEY_DATA → financial_flows  
 CREATE VIEW "MONEY_DATA" AS
 SELECT
-    ROW_NUMBER() OVER (ORDER BY simulation_id, time_period) AS "ID", 
+    ROW_NUMBER() OVER (ORDER BY simulation_id, time_period) AS "ID",
+    simulation_id,
     time_period AS "TIME",
     bank_capital AS "BANK_CAPITAL",
     bank_loans AS "BANK_LOANS",
@@ -49,6 +51,7 @@ FROM financial_flows;
 CREATE VIEW "COMPANY_TABLE" AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY simulation_id, time_period, name) AS "ID",
+    simulation_id,
     time_period AS "TIME_STAMP", 
     name AS "NAME",
     capital AS "CAPITAL",
@@ -74,6 +77,7 @@ FROM companies;
 CREATE VIEW "CONSUMER_TABLE" AS
 SELECT
     ROW_NUMBER() OVER (ORDER BY simulation_id, COALESCE(time_period, 0), name) AS "ID",
+    simulation_id,
     name AS "NAME", 
     employer AS "EMPLOYER",
     items AS "ITEMS",
@@ -94,6 +98,7 @@ FROM consumers;
 CREATE VIEW "PARAMETERS" AS  
 SELECT
     ROW_NUMBER() OVER (ORDER BY simulation_id, parameter_name) AS "ID",
+    simulation_id,
     parameter_name AS "PARAMETER",
     parameter_value AS "VALUE"
 FROM simulation_parameters;
