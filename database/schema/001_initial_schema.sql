@@ -41,6 +41,19 @@ CREATE TABLE user_sessions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- User-country assignments table
+CREATE TABLE user_countries (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL,
+    country_code VARCHAR(100) NOT NULL,
+    access_level VARCHAR(20) DEFAULT 'full' CHECK(access_level IN ('full', 'readonly')),
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    assigned_by UUID,
+    is_active BOOLEAN DEFAULT true,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE(user_id, country_code)
+);
+
 -- =============================================================================
 -- COUNTRIES & SIMULATIONS
 -- =============================================================================

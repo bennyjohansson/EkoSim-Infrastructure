@@ -17,6 +17,12 @@ CREATE INDEX idx_user_sessions_user_id ON user_sessions(user_id);
 CREATE INDEX idx_user_sessions_expires ON user_sessions(expires_at);
 CREATE INDEX idx_user_sessions_token ON user_sessions(token_hash);
 
+-- User-country assignments
+CREATE INDEX idx_user_countries_user_id ON user_countries(user_id);
+CREATE INDEX idx_user_countries_country_code ON user_countries(country_code);
+CREATE INDEX idx_user_countries_active ON user_countries(is_active) WHERE is_active = true;
+CREATE INDEX idx_user_countries_assigned_by ON user_countries(assigned_by);
+
 -- =============================================================================
 -- SIMULATION INDEXES
 -- =============================================================================
