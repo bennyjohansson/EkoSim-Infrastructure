@@ -1,27 +1,25 @@
-# Vue.js Frontend Dockerfile
-FROM node:18-alpine as build
+# Development Frontend Dockerfile for Vue 3 + TypeScript
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files from EkoWeb
-COPY ../EkoWeb/package*.json ./
-RUN npm ci --only=production
+# Copy package files
+COPY modern/package*.json ./
+COPY modern/tsconfig*.json ./
+COPY modern/vite.config.ts ./
 
-# Copy source code
-COPY ../EkoWeb/ .
+# Install dependencies
+RUN npm ci
 
-# Build the application
-RUN npm run build
+# Copy source code (excluding node_modules)
+COPY modern/src ./src
+COPY modern/public ./public
+COPY modern/index.html ./
+COPY modern/vite.config.ts ./
 
-# Production stage with nginx
-FROM nginx:alpine
+# Expose the dev server port
+EXPOSE 3000
 
-# Copy built application
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy nginx configuration
-COPY config/nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Start development server with host binding for container access
+# Override the host setting to bind to all interfaces
+CMD ["npx", "vite", "--host", "0.0.0.0"]

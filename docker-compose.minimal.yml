@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # Simple test service to verify Podman + compose is working
+  hello-test:
+    image: docker.io/library/hello-world:latest
+    container_name: ekosim-test
+    restart: "no"
+
+  # Nginx for testing web serving
+  web-test:
+    image: docker.io/library/nginx:alpine
+    container_name: ekosim-web-test
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  test_data:
+
+networks:
+  ekosim_test:
+    driver: bridge

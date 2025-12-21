@@ -4,6 +4,7 @@ FROM ubuntu:22.04
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    clang \
     cmake \
     sqlite3 \
     libsqlite3-dev \
@@ -11,16 +12,14 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy C++ source code from ekosim
-COPY ../ekosim/ .
+# Copy C++ source code from ekosim  
+COPY . .
 
-# Build the application
-RUN mkdir build && cd build && \
-    cmake .. && \
-    make -j$(nproc)
+# Clean any existing build artifacts and build fresh for Linux
+RUN make clean || true && make
 
-# Create data directory for SQLite
-RUN mkdir -p /app/data
+# Create directory structure for SQLite database
+RUN mkdir -p /var/app/current/myDB
 
 # Create non-root user
 RUN groupadd -r ekosim && useradd -r -g ekosim ekosim
@@ -29,4 +28,4 @@ USER ekosim
 
 EXPOSE 8080
 
-CMD ["./build/ekosim"]
+CMD ["./main"]
