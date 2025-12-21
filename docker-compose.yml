@@ -7,6 +7,8 @@ services:
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/frontend.Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      - DOCKER_ENV=true
     volumes:
       - ../EkoWeb/modern:/app:delegated  # Live code reload
       - /app/node_modules  # Container-managed node_modules
