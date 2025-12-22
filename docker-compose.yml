@@ -49,6 +49,11 @@ services:
       - "8080:8080"
     environment:
       - DATABASE_PATH=/data/ekosim.db
+      - POSTGRES_HOST=ekosim-postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - ../ekosim:/app/source:delegated  # Live code reload for development
       - ../ekosim/myDB:/var/app/current/myDB

@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     cmake \
     sqlite3 \
     libsqlite3-dev \
+    postgresql-client \
+    libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
