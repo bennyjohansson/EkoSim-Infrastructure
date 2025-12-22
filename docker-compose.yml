@@ -26,12 +26,20 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3001
+      - POSTGRES_HOST=ekosim-postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
     volumes:
       - ../EkoWeb/legacy:/app:delegated  # Live code reload
-      - /app/node_modules  # Container-managed node_modules
-      - ../ekosim/myDB:/ekosim/myDB  # Mount to match API server path expectations
+      - ekosim-api-modules:/app/node_modules  # Named volume for node_modules
+      - ../ekosim/myDB:/ekosim/myDB  # SQLite databases access
     networks:
       - ekosim-network
+    depends_on:
+      - ekosim-postgres
 
   ekosim-backend:
     build:
@@ -52,9 +60,9 @@ services:
   ekosim-postgres:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_DB=ekosim
-      - POSTGRES_USER=ekosim
-      - POSTGRES_PASSWORD=dev_password_change_in_production
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -70,6 +78,8 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
+  ekosim-api-modules:
     driver: local
 
 networks:

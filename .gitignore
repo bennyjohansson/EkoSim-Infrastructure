@@ -1,6 +1,14 @@
 # Environment files
 config/env/*.env
 !config/env/*.env.example
+.env
+.env.local
+.env.production
+
+# Secrets
+secrets/
+*.key
+*.pem
 
 # Docker/Podman data
 .docker/
