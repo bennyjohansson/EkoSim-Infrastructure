@@ -18,7 +18,7 @@ WORKDIR /app
 COPY . .
 
 # Clean any existing build artifacts and build fresh for Linux
-RUN make clean || true && make
+RUN make clean || true && sed -i 's/-I\/usr\/local\/include\/postgresql@14/-I\/usr\/include\/postgresql -I\/usr\/local\/include\/postgresql@14/g' makefile && make
 
 # Create directory structure for SQLite database
 RUN mkdir -p /var/app/current/myDB
