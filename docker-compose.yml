@@ -10,8 +10,8 @@ services:
     environment:
       - DOCKER_ENV=true
     volumes:
-      - ../EkoWeb/modern:/app:delegated  # Live code reload
-      - /app/node_modules  # Container-managed node_modules
+      - ../EkoWeb/modern:/app:delegated # Live code reload
+      - /app/node_modules # Container-managed node_modules
     networks:
       - ekosim-network
     depends_on:
@@ -33,9 +33,9 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
     volumes:
-      - ../EkoWeb/legacy:/app:delegated  # Live code reload
-      - ekosim-api-modules:/app/node_modules  # Named volume for node_modules
-      - ../ekosim/myDB:/ekosim/myDB  # SQLite databases access
+      - ../EkoWeb/legacy:/app:delegated # Live code reload
+      - ekosim-api-modules:/app/node_modules # Named volume for node_modules
+      - ../ekosim/myDB:/ekosim/myDB # SQLite databases access
     networks:
       - ekosim-network
     depends_on:
@@ -55,7 +55,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - ../ekosim:/app/source:delegated  # Live code reload for development
+      # Source code removed - C++ must be recompiled in container
       - ../ekosim/myDB:/var/app/current/myDB
     networks:
       - ekosim-network
@@ -76,7 +76,7 @@ services:
     networks:
       - ekosim-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ekosim -d ekosim"]
+      test: [ "CMD-SHELL", "pg_isready -U ekosim -d ekosim" ]
       interval: 30s
       timeout: 10s
       retries: 3
