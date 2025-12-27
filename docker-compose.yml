@@ -10,7 +10,7 @@ services:
     environment:
       - DOCKER_ENV=true
     volumes:
-      - ../EkoWeb/modern:/app:delegated # Live code reload
+      - ../EkoWeb/frontend:/app:delegated # Live code reload
       - /app/node_modules # Container-managed node_modules
     networks:
       - ekosim-network
@@ -33,7 +33,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
     volumes:
-      - ../EkoWeb/legacy:/app:delegated # Live code reload
+      - ../EkoWeb/api:/app:delegated # Live code reload
       - ekosim-api-modules:/app/node_modules # Named volume for node_modules
       - ../ekosim/myDB:/ekosim/myDB # SQLite databases access
     networks:
