@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     postgresql-client \
     libpq-dev \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
