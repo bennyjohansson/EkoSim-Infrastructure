@@ -52,7 +52,7 @@ services:
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/api.Dockerfile
     container_name: ekosim-api
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - PORT=3001
       - POSTGRES_HOST=ekosim-postgres
       - POSTGRES_PORT=5432
