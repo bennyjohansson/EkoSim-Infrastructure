@@ -27,7 +27,7 @@ Open your terminal locally and run:
 
 ```bash
 # Set your project ID
-export PROJECT_ID="your-gcp-project-id"
+export PROJECT_ID="ekosim-production"
 gcloud config set project $PROJECT_ID
 
 # Create the VM instance
@@ -98,7 +98,9 @@ gcloud compute ssh ekosim-server --zone=us-central1-a
 
 ```bash
 # Download and run the setup script
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/EkoSim-Infrastructure/main/scripts/gcp-vm-setup.sh -o setup.sh
+curl -fsSL https://raw.githubusercontent.com/bennyjohansson/EkoSim-Infrastructure/main/scripts/gcp-vm-setup.sh -o setup.sh
+curl -fsSL https://raw.githubusercontent.com/bennyjohansson/EkoSim-Infrastructure/feature/gcp-phase1-deployment/scripts/gcp-vm-setup.sh -o setup.sh
+c
 chmod +x setup.sh
 ./setup.sh
 
@@ -125,18 +127,18 @@ cd /opt/ekosim
 # Clone all three repositories
 # Replace YOUR_USERNAME with your GitHub username
 
-# 1. C++ Backend
-git clone https://github.com/YOUR_USERNAME/ekosim.git
+# 1. C++ Backend (SSH URL)
+git clone git@github.com:bennyjohansson/ekosimProject.git
 
-# 2. Web Application (API + Frontend)
-git clone https://github.com/YOUR_USERNAME/EkoWeb.git
+# 2. Web Application (SSH URL)
+git clone git@github.com:bennyjohansson/EkosimWeb.git
 
-# 3. Infrastructure
-git clone https://github.com/YOUR_USERNAME/EkoSim-Infrastructure.git
+# 3. Infrastructure (SSH URL)
+git clone git@github.com:bennyjohansson/EkoSim-Infrastructure.git
 
 # Verify all repos are cloned
 ls -la
-# Should show: ekosim/ EkoWeb/ EkoSim-Infrastructure/
+# Should show: ekosimProject/ EkosimWeb/ EkoSim-Infrastructure/
 ```
 
 ### Step 7: Configure Environment Variables

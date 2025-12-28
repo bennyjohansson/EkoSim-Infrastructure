@@ -6,18 +6,18 @@ Use this checklist to ensure all steps are completed during deployment.
 
 ### Local Machine Setup
 
-- [ ] Google Cloud SDK installed and authenticated (`gcloud auth login`)
-- [ ] Project ID configured (`gcloud config set project YOUR_PROJECT_ID`)
+- [x ] Google Cloud SDK installed and authenticated (`gcloud auth login`)
+- [ x] Project ID configured (`gcloud config set project YOUR_PROJECT_ID`)
 - [ ] Domain name registered (e.g., ekosim.app)
 - [ ] GitHub repositories are accessible
 - [ ] Architecture document reviewed
 
 ### GCP Account
 
-- [ ] Billing enabled
-- [ ] Compute Engine API enabled
-- [ ] Cloud Storage API enabled
-- [ ] Sufficient quota for e2-medium instance
+- [ x] Billing enabled
+- [ x] Compute Engine API enabled
+- [ x] Cloud Storage API enabled
+- [ x] Sufficient quota for e2-medium instance
 
 ---
 
@@ -25,11 +25,11 @@ Use this checklist to ensure all steps are completed during deployment.
 
 ### Create VM Instance
 
-- [ ] VM created with correct specs (e2-medium, 50GB)
-- [ ] VM is in running state
-- [ ] Firewall rules created (HTTP, HTTPS)
-- [ ] External IP address obtained and saved
-- [ ] Can SSH into VM successfully
+- [x ] VM created with correct specs (e2-medium, 50GB)
+- [x] VM is in running state
+- [x ] Firewall rules created (HTTP, HTTPS)
+- [x ] External IP address obtained and saved "Your EkoSim IP: 34.61.19.198"
+- [x ] Can SSH into VM successfully
 
 **Commands:**
 
@@ -50,7 +50,7 @@ gcloud compute instances describe ekosim-server --zone=us-central1-a \
   --format='get(networkInterfaces[0].accessConfigs[0].natIP)'
 ```
 
-**VM IP Address:** **************\_\_\_\_**************
+**VM IP Address:** **\*\***\*\***\*\***\_\_\_\_**\*\***\*\***\*\***
 
 ---
 
@@ -58,16 +58,16 @@ gcloud compute instances describe ekosim-server --zone=us-central1-a \
 
 ### SSH and Setup
 
-- [ ] SSH connection established
-- [ ] System packages updated
-- [ ] Docker installed
-- [ ] Docker Compose installed
-- [ ] Google Cloud SDK installed
-- [ ] UFW firewall configured
-- [ ] Application directories created (`/opt/ekosim`)
-- [ ] Backup directory created (`/var/backups/ekosim`)
-- [ ] Log directory created (`/var/log/ekosim`)
-- [ ] Docker group permissions applied (`newgrp docker`)
+- [x] SSH connection established
+- [x ] System packages updated
+- [x ] Docker installed
+- [x ] Docker Compose installed
+- [x ] Google Cloud SDK installed
+- [x ] UFW firewall configured
+- [x ] Application directories created (`/opt/ekosim`)
+- [x ] Backup directory created (`/var/backups/ekosim`)
+- [x ] Log directory created (`/var/log/ekosim`)
+- [x ] Docker group permissions applied (`newgrp docker`)
 
 **Command:**
 
@@ -82,11 +82,11 @@ gcloud compute ssh ekosim-server --zone=us-central1-a
 
 ### Clone Repositories
 
-- [ ] Changed to `/opt/ekosim` directory
-- [ ] ekosim repository cloned
-- [ ] EkoWeb repository cloned
-- [ ] EkoSim-Infrastructure repository cloned
-- [ ] All repositories have correct permissions
+- [ x] Changed to `/opt/ekosim` directory
+- [ x] ekosim repository cloned
+- [ x] EkoWeb repository cloned
+- [ x] EkoSim-Infrastructure repository cloned
+- [ x] All repositories have correct permissions
 
 **Commands:**
 
@@ -103,12 +103,12 @@ git clone https://github.com/YOUR_USERNAME/EkoSim-Infrastructure.git
 
 ### Generate Secrets
 
-- [ ] `.env` file created from template
-- [ ] PostgreSQL password generated
-- [ ] JWT secret generated
-- [ ] Session secret generated
+- [x ] `.env` file created from template
+- [x ] PostgreSQL password generated
+- [ x] JWT secret generated
+- [x ] Session secret generated
 - [ ] ALLOWED_ORIGINS set to production domain
-- [ ] Secrets saved in password manager
+- [ x] Secrets saved in password manager
 
 **Secrets to Save:**
 
@@ -150,7 +150,7 @@ gsutil mb -l us-central1 gs://ekosim-backups
 
 ### Deploy Services
 
-- [ ] Deployment script executed
+- [x] Deployment script executed
 - [ ] PostgreSQL container started
 - [ ] Backend container built and started
 - [ ] API container built and started
@@ -452,11 +452,11 @@ https://console.cloud.google.com
 
 ## Sign-Off
 
-**Deployment Completed By:** ************\_\_\_\_************
+**Deployment Completed By:** \***\*\*\*\*\*\*\***\_\_\_\_\***\*\*\*\*\*\*\***
 
-**Date:** ************\_\_\_\_************
+**Date:** \***\*\*\*\*\*\*\***\_\_\_\_\***\*\*\*\*\*\*\***
 
-**Time:** ************\_\_\_\_************
+**Time:** \***\*\*\*\*\*\*\***\_\_\_\_\***\*\*\*\*\*\*\***
 
 **All Checks Passed:** ☐ Yes ☐ No (document issues below)
 
