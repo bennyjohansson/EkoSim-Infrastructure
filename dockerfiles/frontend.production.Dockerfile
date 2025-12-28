@@ -45,7 +45,7 @@ server {
     
     # API proxy - use ^~ to stop location search
     location ^~ /api/ {
-        proxy_pass http://ekosim-api:3001/api/;
+        proxy_pass http://ekosim-api:3001;
         proxy_http_version 1.1;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
@@ -56,7 +56,7 @@ server {
     
     # Simulation API proxy - use ^~ to stop location search
     location ^~ /ekosim/ {
-        proxy_pass http://ekosim-api:3001/ekosim/;
+        proxy_pass http://ekosim-api:3001;
         proxy_http_version 1.1;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
