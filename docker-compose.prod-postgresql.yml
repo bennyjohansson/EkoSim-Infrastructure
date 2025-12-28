@@ -48,7 +48,7 @@ services:
 
   ekosim-api:
     build:
-      context: ../EkoWeb
+      context: ../EkosimWeb
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/api.Dockerfile
     container_name: ekosim-api
     environment:
@@ -79,7 +79,7 @@ services:
 
   ekosim-frontend:
     build:
-      context: ../EkoWeb
+      context: ../EkosimWeb
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/frontend.production.Dockerfile
     container_name: ekosim-frontend
     ports:
