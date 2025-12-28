@@ -60,9 +60,9 @@ server {
         proxy_cache_bypass \$http_upgrade;
     }
     
-    # Backend proxy
+    # Simulation API proxy (ekosim routes are served by the API, not backend)
     location /ekosim/ {
-        proxy_pass http://ekosim-backend:8080/;
+        proxy_pass http://ekosim-api:3001/ekosim/;
         proxy_http_version 1.1;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
