@@ -43,13 +43,8 @@ server {
     gzip_min_length 1024;
     gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml+rss application/json application/javascript;
     
-    # SPA routing - all routes go to index.html
-    location / {
-        try_files \$uri \$uri/ /index.html;
-    }
-    
-    # API proxy
-    location /api/ {
+    # API proxy - use ^~ to stop location search
+    location ^~ /api/ {
         proxy_pass http://ekosim-api:3001/api/;
         proxy_http_version 1.1;
         proxy_set_header Host \$host;
@@ -59,10 +54,20 @@ server {
         proxy_cache_bypass \$http_upgrade;
     }
     
-    # Simulation API proxy (ekosim routes are served by the API, not backend)
-    location /ekosim/ {
+    # Simulation API proxy - use ^~ to stop location search
+    location ^~ /ekosim/ {
         proxy_pass http://ekosim-api:3001/ekosim/;
         proxy_http_version 1.1;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+    
+    # SPA routing - all other routes go to index.html
+    location / {
+        try_files \$uri \$uri/ /index.html;
+    }
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
