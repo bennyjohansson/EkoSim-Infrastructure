@@ -36,16 +36,17 @@ COMMENT ON COLUMN high_scores.achieved_at IS 'When this score was achieved';
 -- =============================================================================
 -- LEGACY COMPATIBILITY VIEW FOR C++ BACKEND
 -- Maps old HIGH_SCORE table structure to new high_scores table
+-- PostgreSQL converts unquoted identifiers to lowercase, so we use lowercase
 -- =============================================================================
 
 -- Create an updatable view that allows INSERTs from legacy C++ code
-CREATE VIEW "HIGH_SCORE" AS
+CREATE VIEW high_score AS
 SELECT
-    country AS "COUNTRY",
-    growth_rate AS "GROWTH",
-    palma_ratio AS "PALMA",
-    environmental_impact AS "ENV_IMP",
-    achieved_at AS "TIMENOW"
+    country,
+    growth_rate AS growth,
+    palma_ratio AS palma,
+    environmental_impact AS env_imp,
+    achieved_at AS timenow
 FROM high_scores;
 
 -- Create INSTEAD OF INSERT trigger to handle inserts through the view
@@ -53,12 +54,12 @@ CREATE OR REPLACE FUNCTION insert_high_score()
 RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO high_scores (country, growth_rate, palma_ratio, environmental_impact, achieved_at)
-    VALUES (NEW."COUNTRY", NEW."GROWTH", NEW."PALMA", NEW."ENV_IMP", NEW."TIMENOW");
+    VALUES (NEW.country, NEW.growth, NEW.palma, NEW.env_imp, NEW.timenow);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER high_score_insert
-INSTEAD OF INSERT ON "HIGH_SCORE"
+INSTEAD OF INSERT ON high_score
 FOR EACH ROW
 EXECUTE FUNCTION insert_high_score();
