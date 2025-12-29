@@ -3,14 +3,14 @@ version: '3.8'
 services:
   ekosim-frontend:
     build:
-      context: ../EkoWeb
+      context: ../EkosimWeb
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/frontend.Dockerfile
     ports:
       - "3000:3000"
     environment:
       - DOCKER_ENV=true
     volumes:
-      - ../EkoWeb/frontend:/app:delegated # Live code reload
+      - ../EkosimWeb/frontend:/app:delegated # Live code reload
       - /app/node_modules # Container-managed node_modules
     networks:
       - ekosim-network
@@ -19,7 +19,7 @@ services:
 
   ekosim-api:
     build:
-      context: ../EkoWeb
+      context: ../EkosimWeb
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/api.Dockerfile
     ports:
       - "3001:3001"
@@ -33,9 +33,9 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
     volumes:
-      - ../EkoWeb/api:/app:delegated # Live code reload
+      - ../EkosimWeb/api:/app:delegated # Live code reload
       - ekosim-api-modules:/app/node_modules # Named volume for node_modules
-      - ../ekosim/myDB:/ekosim/myDB # SQLite databases access
+      - ../ekosimProject/myDB:/ekosim/myDB # SQLite databases access
     networks:
       - ekosim-network
     depends_on:
@@ -43,7 +43,7 @@ services:
 
   ekosim-backend:
     build:
-      context: ../ekosim
+      context: ../ekosimProject
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/backend.Dockerfile
     ports:
       - "8080:8080"
@@ -56,7 +56,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       # Source code removed - C++ must be recompiled in container
-      - ../ekosim/myDB:/var/app/current/myDB
+      - ../ekosimProject/myDB:/var/app/current/myDB
     networks:
       - ekosim-network
     depends_on:

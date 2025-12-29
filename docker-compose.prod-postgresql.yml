@@ -22,7 +22,7 @@ services:
 
   ekosim-backend:
     build:
-      context: ../ekosim
+      context: ../ekosimProject
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/backend.Dockerfile
     container_name: ekosim-backend
     environment:
