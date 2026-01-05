@@ -151,13 +151,13 @@ gsutil mb -l us-central1 gs://ekosim-backups
 ### Deploy Services
 
 - [x] Deployment script executed
-- [ ] PostgreSQL container started
-- [ ] Backend container built and started
-- [ ] API container built and started
-- [ ] Frontend container built and started
+- [x ] PostgreSQL container started
+- [x ] Backend container built and started
+- [x ] API container built and started
+- [x ] Frontend container built and started
 - [ ] All containers show "Up (healthy)" status
-- [ ] Database initialized with schema
-- [ ] Can connect to database
+- [x ] Database initialized with schema
+- [x ] Can connect to database
 
 **Command:**
 
