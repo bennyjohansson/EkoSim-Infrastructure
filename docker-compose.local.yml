@@ -1,0 +1,7 @@
+# Use with: docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
+services:
+  ekosim-postgres:
+    ports: !override
+      - "127.0.0.1:55432:5432"
+  ekosim-backend:
+    ports: !override []
