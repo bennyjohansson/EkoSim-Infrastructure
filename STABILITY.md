@@ -1,6 +1,6 @@
 # Stability verification
 
-The backend defaults to 512 MiB memory, no additional swap allowance, and 0.75 CPU. Override SIMULATOR_MEMORY_LIMIT and SIMULATOR_CPU_LIMIT to suit the host. All four services rotate Docker json-file logs at 10 MiB with three files retained. Recreate existing containers to apply these settings. Inspect HostConfig on the running containers to verify the effective values.
+The backend defaults to 512 MiB memory, no additional swap allowance, and 0.75 CPU. Override SIMULATOR_MEMORY_LIMIT and SIMULATOR_CPU_LIMIT to suit the host. All four services rotate Docker json-file logs at 10 MiB with three files retained. Production Nginx uses the official image stdout/stderr log links instead of a host log-directory mount, so these logs also pass through Docker rotation. Recreate existing containers to apply these settings. Inspect HostConfig on the running containers to verify the effective values.
 
 Development PostgreSQL publishes on loopback port 5545 by default. POSTGRES_PUBLISHED_PORT changes the host port. The simulator has no published port. Production API health checks use /ready. API liveness remains /health. /health/simulation reports whether each city's latest saved time-data row is recent. SIMULATION_MAX_AGE_SECONDS defaults to 120 and should exceed the expected cycle duration. Cycle counter resets are supported through database timestamps. Empty data reports starting, old data reports stale, and database errors report unavailable, all with HTTP 503.
 
