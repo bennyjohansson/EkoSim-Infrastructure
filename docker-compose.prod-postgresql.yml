@@ -1,7 +1,12 @@
-version: '3.8'
+x-bounded-logs: &bounded-logs
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
 
 services:
   ekosim-postgres:
+    logging: *bounded-logs
     image: postgres:15-alpine
     container_name: ekosim-postgres
     environment:
@@ -21,6 +26,10 @@ services:
     restart: unless-stopped
 
   ekosim-backend:
+    logging: *bounded-logs
+    mem_limit: ${SIMULATOR_MEMORY_LIMIT:-512m}
+    memswap_limit: ${SIMULATOR_MEMORY_LIMIT:-512m}
+    cpus: "${SIMULATOR_CPU_LIMIT:-0.75}"
     build:
       context: ../ekosimProject
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/backend.Dockerfile
@@ -41,6 +50,7 @@ services:
     restart: unless-stopped
 
   ekosim-api:
+    logging: *bounded-logs
     build:
       context: ../EkosimWeb
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/api.Dockerfile
@@ -65,13 +75,14 @@ services:
         condition: service_started
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3001/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3001/ready || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
 
   ekosim-frontend:
+    logging: *bounded-logs
     build:
       context: ../EkosimWeb
       dockerfile: ../EkoSim-Infrastructure/dockerfiles/frontend.production.Dockerfile
@@ -81,8 +92,6 @@ services:
       - "443:443"
     environment:
       - API_URL=http://ekosim-api:3001
-    volumes:
-      - ./logs/nginx:/var/log/nginx
     networks:
       - ekosim-network
     depends_on:
